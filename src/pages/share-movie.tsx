@@ -4,14 +4,13 @@ import { getParsedToken, isLoggedIn } from "@/services/authServices";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { getContent } from "../services/youtubeServices";
 
 export default function ShareMovie() {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -36,20 +35,33 @@ export default function ShareMovie() {
 
   const handleShareMovie = async () => {
     if (url) {
-      setLoading(true);
-
       const urlObj = new URL(url);
       const urlParams = urlObj.searchParams;
       const v = urlParams.get("v");
+
+      if (!v) {
+        toast.error("The youtube url is wrong");
+        return;
+      }
+
+      setLoading(true);
+
+      const videoData = await getContent(v);
+
+      if (!videoData) {
+        setLoading(false);
+        toast.error("Can not get video content");
+        return;
+      }
 
       const newUrl = `https://www.youtube.com/embed/${v}`;
 
       const res = await fetch("/api/movies/add", {
         method: "POST",
         body: JSON.stringify({
-          url: v ? newUrl : url,
-          title,
-          description,
+          url: newUrl,
+          title: videoData.title,
+          description: videoData.description,
           createdBy: email,
         }),
       });
@@ -59,10 +71,6 @@ export default function ShareMovie() {
         toast.success(data.success);
 
         router.push("/");
-
-        setUrl("");
-        setTitle("");
-        setDescription("");
       } else {
         toast.error(data.error);
       }
@@ -85,30 +93,6 @@ export default function ShareMovie() {
             name="url"
             className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1 w-72"
             onChange={(e) => setUrl(e.target.value)}
-          />
-        </label>
-
-        <label className="block">
-          <span className="block text-sm font-medium text-slate-700">
-            Title
-          </span>
-          <input
-            type="text"
-            name="title"
-            className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1 w-72"
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </label>
-
-        <label className="block mb-2">
-          <span className="block text-sm font-medium text-slate-700">
-            Description
-          </span>
-          <input
-            type="text"
-            name="description"
-            className="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block rounded-md sm:text-sm focus:ring-1 w-72"
-            onChange={(e) => setDescription(e.target.value)}
           />
         </label>
 

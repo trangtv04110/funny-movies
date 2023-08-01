@@ -1,5 +1,6 @@
 import Loading from "@/components/Loading";
 import MasterLayout from "@/components/MasterLayout";
+import { truncate } from "@/helpers";
 import { useEffect, useState } from "react";
 
 interface Movie {
@@ -53,7 +54,9 @@ export default function Home() {
                 )}
                 {movie.createdBy && <div>Shared by: {movie.createdBy}</div>}
                 {movie.description && (
-                  <div className="text-slate-400">{movie.description}</div>
+                  <div className="text-slate-400">
+                    {truncate(movie.description, 220)}
+                  </div>
                 )}
               </div>
             </div>
