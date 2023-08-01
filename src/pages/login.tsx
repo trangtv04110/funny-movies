@@ -6,6 +6,7 @@ import Head from "next/head";
 import { toast } from "react-toastify";
 import { setToken } from "@/services/authServices";
 import { useRouter } from "next/navigation";
+import { validateEmail } from "@/helpers";
 
 export default function Login() {
   const router = useRouter();
@@ -16,6 +17,11 @@ export default function Login() {
 
   const handleLogin = async () => {
     if (email && password) {
+      if (!validateEmail(email)) {
+        toast.error("You have entered an invalid email address!");
+        return;
+      }
+
       setLoading(true);
 
       const res = await fetch("/api/users/login", {

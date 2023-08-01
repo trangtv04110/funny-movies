@@ -5,6 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { validateEmail } from "@/helpers";
 
 export default function Register() {
   const router = useRouter();
@@ -16,6 +17,11 @@ export default function Register() {
 
   const handleRegister = async () => {
     if (email && password && passwordConfirm) {
+      if (!validateEmail(email)) {
+        toast.error("You have entered an invalid email address!");
+        return
+      }
+      
       if (password !== passwordConfirm) {
         toast.error("Confirm password not match");
         return;
