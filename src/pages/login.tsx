@@ -4,8 +4,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { setToken } from "@/services/authServices";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,8 +24,9 @@ export default function Login() {
       const data = await res.json();
 
       if (data && data.token) {
+        toast.success("Login successful");
         setToken(data.token);
-        window.location.href = "/";
+        router.push("/");
       } else {
         toast.error(data.error);
       }

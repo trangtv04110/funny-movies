@@ -16,9 +16,9 @@ export const setToken = (token: string) => {
 };
 
 export const isLoggedIn = () => {
-  if (typeof window === "undefined") return false;
-  const tokenObj = getParsedToken();
-  return !!tokenObj;
+  if (typeof window === "undefined") return null;
+  const token = localStorage.getItem("token");
+  return !!token;
 };
 
 export const logout = () => {

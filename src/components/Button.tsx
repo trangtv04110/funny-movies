@@ -1,17 +1,24 @@
 import React, { ReactNode } from "react";
+import classNames from "classnames";
 
 type ButtonProps = {
+  className?: string;
   label?: string;
   children?: ReactNode;
+  size?: "sm" | "md";
   type?: "button" | "submit" | "reset";
+  rounded?: boolean;
   isLoading?: boolean;
   disabled?: boolean;
   onClick?: () => void;
 };
 
 export default function Button({
+  className,
   label,
+  size = "md",
   type = "button",
+  rounded = true,
   isLoading,
   disabled,
   children,
@@ -19,7 +26,16 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className="bg-sky-500 hover:bg-sky-700 text-white rounded-md px-4 py-2 disabled:opacity-75 disabled:cursor-wait"
+      className={classNames(
+        "bg-sky-500 hover:bg-sky-700 text-white disabled:opacity-75 disabled:cursor-wait shadow-md",
+        {
+          "rounded-md": rounded,
+          "px-4 py-2": size === "md",
+          "px-4 py-1": size === "sm",
+        },
+        className
+      )}
+      // className="bg-sky-500 hover:bg-sky-700 text-white rounded-md px-4 py-2 disabled:opacity-75 disabled:cursor-wait"
       type={type}
       disabled={disabled}
       onClick={onClick}

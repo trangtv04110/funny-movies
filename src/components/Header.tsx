@@ -23,15 +23,35 @@ export default function Header() {
     router.push("/login");
   };
 
+  const handleRedirectToShareMoviePage = () => {
+    router.push("/share-movie");
+  };
+
   return (
     <div className="flex justify-between items-center py-2 border-b-2 border-gray-400">
       <h1 className="text-4xl">Funny Movies</h1>
 
-      {email && <div>Welcome {email}</div>}
+      {email && (
+        <div className="flex space-x-2 justify-center items-center">
+          <span>Welcome {email}</span>
+          <Button
+            size="sm"
+            rounded={false}
+            onClick={handleRedirectToShareMoviePage}
+          >
+            Share a movie
+          </Button>
+          <Button size="sm" rounded={false} onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
+      )}
 
       {!email && (
         <div>
-          <Button onClick={handleRedirectToLogin}>Login / Register</Button>
+          <Button size="sm" rounded={false} onClick={handleRedirectToLogin}>
+            Login / Register
+          </Button>
         </div>
       )}
     </div>

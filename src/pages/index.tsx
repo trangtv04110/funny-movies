@@ -38,9 +38,13 @@ export default function Home() {
               <iframe width="420" height="200" src={movie.url}></iframe>
 
               <div>
-                <div>{movie.title}</div>
-                <div>Shared by: {movie.createdBy}</div>
-                <div>Description: {movie.description}</div>
+                {movie.title && (
+                  <div className="text-xl pb-2">{movie.title}</div>
+                )}
+                {movie.createdBy && <div>Shared by: {movie.createdBy}</div>}
+                {movie.description && (
+                  <div>Description: {movie.description}</div>
+                )}
               </div>
             </div>
           ))}
