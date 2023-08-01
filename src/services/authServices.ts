@@ -6,7 +6,8 @@ export const getParsedToken = () => {
   if (typeof window === "undefined") return null;
   const token = localStorage.getItem("token");
   if (token && token.length > 0 && token !== '""') {
-    return new JwtDecode(token);
+    const data = JwtDecode(token) as any;
+    return { email: data.email, exp: data.exp };
   }
   return null;
 };
