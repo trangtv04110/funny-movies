@@ -74,7 +74,7 @@ export default function Login() {
         </div>
 
         <div className="text-slate-600 flex space-x-2 justify-center">
-          <span>Don't have an account?</span>
+          <span>Do not have an account?</span>
           <Link href="/register" className="underline">
             Register here
           </Link>
