@@ -4,6 +4,7 @@ import { getParsedToken, isLoggedIn } from "@/services/authServices";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 import { getContent } from "../services/youtubeServices";
 
 export default function ShareMovie() {
@@ -81,6 +82,9 @@ export default function ShareMovie() {
 
   return (
     <MasterLayout>
+      <Head>
+        <title>Share movie | Funny movies</title>
+      </Head>
       <div className="m-auto max-w-3xl bg-slate-300 rounded-md p-8 shadow-lg flex flex-col space-y-4">
         <div className="text-2xl text-center">Share a Youtube movie</div>
 

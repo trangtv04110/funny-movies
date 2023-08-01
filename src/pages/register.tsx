@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import EmptyLayout from "@/components/EmptyLayout";
 import React, { useState } from "react";
 import Link from "next/link";
+import Head from "next/head";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -46,6 +47,9 @@ export default function Register() {
 
   return (
     <EmptyLayout>
+      <Head>
+        <title>Register | Funny movies</title>
+      </Head>
       <div className="m-auto max-w-3xl bg-slate-300 rounded-md p-8 shadow-lg flex flex-col space-y-4">
         <div className="text-2xl text-center">Register</div>
 

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Loading from "@/components/Loading";
 import MasterLayout from "@/components/MasterLayout";
 import { truncate } from "@/helpers";
@@ -31,6 +32,9 @@ export default function Home() {
 
   return (
     <MasterLayout>
+      <Head>
+        <title>Funny movies</title>
+      </Head>
       <div className="flex flex-col space-y-8 justify-center items-center max-w-4xl">
         {loading && <Loading />}
         {!loading &&
@@ -48,13 +52,16 @@ export default function Home() {
 
               <div className="flex flex-col space-y-2 flex-1">
                 {movie.title && (
-                  <h2 className="font-semibold text-slate-900 truncate pr-20">
-                    {movie.title}
+                  <h2
+                    className="font-semibold text-slate-900 truncate pr-20"
+                    title={movie.title}
+                  >
+                    {truncate(movie.title, 60)}
                   </h2>
                 )}
                 {movie.createdBy && <div>Shared by: {movie.createdBy}</div>}
                 {movie.description && (
-                  <div className="text-slate-400">
+                  <div className="text-slate-400" title={movie.description}>
                     {truncate(movie.description, 220)}
                   </div>
                 )}
