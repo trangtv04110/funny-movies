@@ -3,8 +3,11 @@ import EmptyLayout from "@/components/EmptyLayout";
 import React, { useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -31,6 +34,8 @@ export default function Register() {
         setEmail("");
         setPassword("");
         setPasswordConfirm("");
+
+        router.push("/login");
       } else {
         toast.error(data.error);
       }

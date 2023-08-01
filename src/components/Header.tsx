@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import Button from "./Button";
 import { getParsedToken, logout } from "@/services/authServices";
+import logo from "../../public/svg/movie.svg";
 
 export default function Header() {
   const router = useRouter();
@@ -28,8 +30,14 @@ export default function Header() {
   };
 
   return (
-    <div className="flex justify-between items-center py-2 border-b-2 border-gray-400">
-      <h1 className="text-4xl">Funny Movies</h1>
+    <div
+      className="flex flex-col space-y-2 justify-between items-center py-2 border-b md:flex-row"
+      style={{ borderColor: "#0f172a1a" }}
+    >
+      <h1 className="flex justify-center items-center space-x-2 text-2xl">
+        <Image priority src={logo} alt="Funny movies" height={64} />
+        <span>Funny Movies</span>
+      </h1>
 
       {email && (
         <div className="flex space-x-2 justify-center items-center">

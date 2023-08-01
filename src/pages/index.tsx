@@ -30,20 +30,30 @@ export default function Home() {
 
   return (
     <MasterLayout>
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-8 justify-center items-center max-w-4xl">
         {loading && <Loading />}
         {!loading &&
           movies.map((movie, i) => (
-            <div className="flex space-x-8" key={i}>
-              <iframe width="420" height="200" src={movie.url}></iframe>
+            <div
+              className="flex flex-col space-y-2 md:flex-row md:space-x-8 w-full"
+              key={i}
+            >
+              <iframe
+                width="310"
+                height="180"
+                src={movie.url}
+                className="flex"
+              ></iframe>
 
-              <div>
+              <div className="flex flex-col space-y-2 flex-1">
                 {movie.title && (
-                  <div className="text-xl pb-2">{movie.title}</div>
+                  <h2 className="font-semibold text-slate-900 truncate pr-20">
+                    {movie.title}
+                  </h2>
                 )}
                 {movie.createdBy && <div>Shared by: {movie.createdBy}</div>}
                 {movie.description && (
-                  <div>Description: {movie.description}</div>
+                  <div className="text-slate-400">{movie.description}</div>
                 )}
               </div>
             </div>
