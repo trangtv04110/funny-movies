@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "cypress open",
+    "test:open": "cypress open",
+    "test:component": "cypress open --component",
+    "test": "cypress run --component",
     "lint": "next lint"
   },
   "dependencies": {
