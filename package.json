@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "cypress open",
     "lint": "next lint"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@types/memory-cache": "^0.2.3"
+    "@types/memory-cache": "^0.2.3",
+    "cypress": "^12.17.2"
   }
 }
