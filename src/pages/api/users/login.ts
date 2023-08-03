@@ -16,7 +16,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { email, password } = JSON.parse(req.body);
+  const { email, password } =
+    typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   if (email && password) {
     try {
@@ -27,28 +28,25 @@ export default async function handler(
 
       if (results && results.length === 1) {
         const user = results[0];
-        bcrypt.compare(
-          password,
-          user.password,
-          function (err: any, match: boolean) {
-            if (match) {
-              delete user.password;
-              const token = jwt.sign(
-                user,
-                "JWT_SECRET",
-                { expiresIn: "3d" } // https://github.com/zeit/ms
-              );
-              res.status(200).json({
-                success: true,
-                token,
-              });
-            } else {
-              res.status(200).json({
-                error: "Email or password is not correct",
-              });
-            }
-          }
-        );
+
+        const match = await bcrypt.compare(password, user.password);
+
+        if (match) {
+          delete user.password;
+          const token = jwt.sign(
+            user,
+            "JWT_SECRET",
+            { expiresIn: "3d" } // https://github.com/zeit/ms
+          );
+          res.status(200).json({
+            success: true,
+            token,
+          });
+        } else {
+          res.status(200).json({
+            error: "Email or password is not correct",
+          });
+        }
 
         client.close();
       } else {

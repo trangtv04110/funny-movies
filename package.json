@@ -6,9 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test:open": "cypress open",
-    "test:component": "cypress open --component",
-    "test": "cypress run --component",
+    "test:cypress": "cypress open --component",
+    "test:component": "cypress run --component",
+    "test:api": "jest --detectOpenHandles",
     "lint": "next lint"
   },
   "dependencies": {
@@ -33,7 +33,12 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
     "@types/memory-cache": "^0.2.3",
-    "cypress": "^12.17.2"
+    "cypress": "^12.17.2",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
+    "node-mocks-http": "^1.12.2"
   }
 }

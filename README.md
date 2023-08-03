@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Demo
+
+https://fun-movies.vercel.app/
+
 ## Introduction
 
 This project is Funny movies, a website where you can share any youtube videos.
@@ -30,12 +34,20 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Testing
+
+```bash
+yarn test:component
+# Unit test for React components (FE)
+# Using cypress (https://www.cypress.io/)
+
+yarn test:api
+# Unit test for API (BE)
+# Using Jest (https://jestjs.io/)
+```
+
 ## Database Setup
 
 This project is using MongoDB Cloud Services (free service), so no need to setup database at local.
 
 Learn more: https://www.mongodb.com/products/platform/cloud
-
-## Demo
-
-https://fun-movies.vercel.app/

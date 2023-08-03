@@ -18,13 +18,14 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { title, description, url, createdBy } = JSON.parse(req.body);
+  const { title, description, url, createdBy, isTest } =
+    typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   try {
     await client.connect();
     const collection = client.db(DATABSE).collection("movies");
 
-    await collection.insertOne({ title, description, url, createdBy });
+    await collection.insertOne({ title, description, url, createdBy, isTest });
     cache.del(CACHE_NAME);
 
     res.status(200).json({

@@ -18,7 +18,10 @@ const getMovies = async () => {
   try {
     await client.connect();
     const collection = client.db(DATABSE).collection("movies");
-    const data = await collection.find().sort({ _id: -1 }).toArray();
+    const data = await collection
+      .find({ isTest: { $ne: true } })
+      .sort({ _id: -1 })
+      .toArray();
     return data;
   } catch (e) {
     console.log("GET movies error: ", e);

@@ -16,7 +16,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { email, password } = JSON.parse(req.body);
+  const { email, password } =
+    typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
   const filters = { email: new RegExp("^" + email + "$", "i") };
   try {
@@ -26,17 +27,17 @@ export default async function handler(
 
     if (results && results.length > 0) {
       res.status(200).json({ error: "This email has been used." });
-      client.close();
     } else {
-      bcrypt.hash(password, 10, async function (err: any, hash: string) {
-        console.log(1);
-        await collection.insertOne({ email, password: hash });
-        res.status(200).json({
-          success: "Your account has been created successful.",
-        });
+      const hash = bcrypt.hashSync(password, 10);
+      await collection.insertOne({ email, password: hash });
+
+      res.status(200).json({
+        success: "Your account has been created successful.",
       });
     }
   } catch (e) {
     console.log("Error: ", e);
+  } finally {
+    // client.close();
   }
 }
