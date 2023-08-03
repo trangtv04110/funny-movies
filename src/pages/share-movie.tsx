@@ -36,9 +36,12 @@ export default function ShareMovie() {
 
   const handleShareMovie = async () => {
     if (url) {
-      const urlObj = new URL(url);
-      const urlParams = urlObj.searchParams;
-      const v = urlParams.get("v");
+      let v = "";
+      try {
+        const urlObj = new URL(url);
+        const urlParams = urlObj.searchParams;
+        v = urlParams.get("v") || "";
+      } catch (error) {}
 
       if (!v) {
         toast.error("The youtube url is wrong");
